@@ -1,0 +1,54 @@
+services:
+  # Development services
+  postgres:
+    image: postgres:16.3
+    ports:
+      - '8090:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: fecal_analyzer_server
+      POSTGRES_PASSWORD: "UE8F1VK10qdJZKMHVHisLOu3kniSAaIN"
+    volumes:
+      - fecal_analyzer_server_data:/var/lib/postgresql/data
+    profiles:
+      - '' # Default profile
+      - dev
+  redis:
+    image: redis:6.2.6
+    ports:
+      - '8091:6379'
+    command: redis-server --requirepass "_avhvQTkzEsQdIpVi4oi7JHeWW78uppL"
+    environment:
+      - REDIS_REPLICATION_MODE=master
+    profiles:
+      - '' # Default profile
+      - dev
+
+  # Test services
+  postgres_test:
+    image: postgres:16.3
+    ports:
+      - '9090:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: fecal_analyzer_server_test
+      POSTGRES_PASSWORD: "GALbED5DY8zVYDSQ2sbVmzcWh1QPHutH"
+    volumes:
+      - fecal_analyzer_server_test_data:/var/lib/postgresql/data
+    profiles:
+      - '' # Default profile
+      - test
+  redis_test:
+    image: redis:6.2.6
+    ports:
+      - '9091:6379'
+    command: redis-server --requirepass "PDCwGR5QUCIuMYjYMUugeGSEst0t_Cde"
+    environment:
+      - REDIS_REPLICATION_MODE=master
+    profiles:
+      - '' # Default profile
+      - test
+
+volumes:
+  fecal_analyzer_server_data:
+  fecal_analyzer_server_test_data:
